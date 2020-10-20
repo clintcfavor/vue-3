@@ -5,6 +5,7 @@
     <input v-model="newTodo" name="newTodo" />
     <button>Add Todo</button>
   </form>
+  <button @click="markAllDone()">Mark all as Done</button>
   Todos:
   <ol>
     <li
@@ -13,6 +14,7 @@
       :class="{ done: todo.done }"
     >
       <h3 @click="toggleDone(todo)">{{ todo.content }}</h3>
+      <button @click="removeTodo(index)">Remove from list</button>
     </li>
   </ol>
 </template>
@@ -38,11 +40,21 @@ export default {
       todo.done = !todo.done;
     }
 
+    function removeTodo(todoIndex) {
+      todos.value.splice(todoIndex, 1);
+    }
+
+    function markAllDone() {
+      todos.value.forEach((todo) => (todo.done = true));
+    }
+
     return {
       addNewTodo,
       newTodo,
       todos,
       toggleDone,
+      removeTodo,
+      markAllDone,
     };
   },
 };
